@@ -14,39 +14,49 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser;
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        title: const Text('Welcome to the SHOP'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              user == null
-                  ? Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const LoginPage()),
-              )
-                  : Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const AccountPage()),
-              );
-            },
-            icon: Icon(
-              Icons.person,
-              color: user == null ? Colors.white : Colors.lightGreenAccent,
+    return BlocProvider(
+      create: (_) => UserLoginCubit(context.read<UserLoginRepository>()),
+      child: BlocBuilder<UserLoginCubit, UserLoginState>(
+        buildWhen: (previousState, state) => previousState != state,
+        builder: (context, state) {
+          User? user = FirebaseAuth.instance.currentUser;
+          print(user);
+          return Scaffold(
+            resizeToAvoidBottomInset: false,
+            appBar: AppBar(
+              title: const Text('Welcome to the SHOP'),
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    user == null
+                        ? Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginPage()),
+                    )
+                        : Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const AccountPage()),
+                    );
+                  },
+                  icon: Icon(
+                    Icons.person,
+                    color: user == null ? Colors.white : Colors
+                        .lightGreenAccent,
+                  ),
+                ),
+              ],
             ),
-          ),
-        ],
-      ),
-      body: SafeArea(
-        child: Center(
-          child: user == null
-              ? Text('No Auth $accessKey')
-              : Text('Welcome to the BEST shop! $accessKey'),
-        ),
+            body: SafeArea(
+              child: Center(
+                child: user == null
+                    ? Text('No Auth $accessKey')
+                    : Text('Welcome to the BEST shop! $accessKey'),
+              ),
+            ),
+          );
+        },
       ),
     );
   }

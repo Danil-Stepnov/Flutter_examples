@@ -7,12 +7,9 @@ import 'package:flutter_pet_project_shop/feature/login_feature/presentation/page
 
 import 'development.dart';
 import 'feature/login_feature/presentation/pages/home_page.dart';
-import 'feature/login_feature/presentation/pages/signup_screen.dart';
-
-
+import 'feature/login_feature/presentation/pages/signup_page.dart';
 
 import 'feature/login_feature/presentation/services/firebase_streem.dart';
-
 
 Future<void> main() async => await Development().init();
 
@@ -28,17 +25,7 @@ class App extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      routes: {
-        '/': (context) =>
-            FirebaseStream(
-              userLoginRepository: UserLoginRepositoryImpl(
-                  UserLoginMapper()),
-            ),
-        '/signup': (context) => const SignUpPage(),
-        '/home': (context) => const HomePage(),
-        '/verify': (context) => const VerifyEmailPage(),
-      },
-      initialRoute: '/',
+      home: const FirebaseStream(),
     );
   }
 }

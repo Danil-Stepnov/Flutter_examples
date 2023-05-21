@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_pet_project_shop/feature/login_feature/presentation/cubit/login_cubit.dart';
+import 'package:flutter_pet_project_shop/feature/login_feature/presentation/pages/verify_email_page.dart';
 import 'package:flutter_pet_project_shop/feature/login_feature/presentation/services/snack_bar_service.dart';
 
 import '../../domain/repository/user_login_repository.dart';
@@ -73,9 +74,9 @@ class _SignUpScreenState extends State<_SignUpPage> {
       builder: (context, state) {
         return BlocListener<UserLoginCubit, UserLoginState>(
           listener: (context, state) {
-            if (state.status.isSuccess) {
-              Navigator.of(context).pushNamedAndRemoveUntil(
-                  '/', (Route<dynamic> route) => false);
+            if (state.status.isSignUp) {
+              Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => const VerifyEmailPage()));
             }
             if (state.status.isError) {
               SnackBarService.showSnackBar(

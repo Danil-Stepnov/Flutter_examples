@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_pet_project_shop/feature/login_feature/presentation/cubit/login_cubit.dart';
+import 'package:flutter_pet_project_shop/feature/login_feature/presentation/pages/home_page.dart';
 
 import '../../domain/repository/user_login_repository.dart';
 
@@ -30,8 +31,9 @@ class _AccountPageState extends State<_AccountPage> {
   Future<void> signOut() async {
     final navigator = Navigator.of(context);
     context.read<UserLoginCubit>().signOut();
-    print("HERE!");
-    navigator.pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+    navigator.pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => const HomePage()),
+        (route) => false);
   }
 
   @override

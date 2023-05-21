@@ -2,6 +2,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_pet_project_shop/feature/login_feature/presentation/cubit/login_cubit.dart';
+import 'package:flutter_pet_project_shop/feature/login_feature/presentation/pages/signup_page.dart';
 import 'package:flutter_pet_project_shop/feature/login_feature/presentation/services/snack_bar_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -47,7 +48,6 @@ class _LoginPageState extends State<_LoginPage> {
   }
 
   Future<void> login() async {
-    final navigator = Navigator.of(context);
     final isValid = formKey.currentState!.validate();
 
     if (!isValid) return;
@@ -62,7 +62,7 @@ class _LoginPageState extends State<_LoginPage> {
       builder: (context, state) {
         return BlocListener<UserLoginCubit, UserLoginState>(
           listener: (context, state) {
-            if (state.status.isSuccess) {
+            if (state.status.isSignIn) {
               Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(
                   builder: (_) => HomePage(
@@ -72,9 +72,9 @@ class _LoginPageState extends State<_LoginPage> {
                         .accessKey!
                         .accessKey,
                   ),
-            ),
-            (Route<dynamic> route) => false,
-            );
+                ),
+                (Route<dynamic> route) => false,
+              );
             }
             if (state.status.isError) {
               SnackBarService.showSnackBar(
@@ -146,7 +146,10 @@ class _LoginPageState extends State<_LoginPage> {
                     const SizedBox(height: 30),
                     TextButton(
                       onPressed: () {
-                        Navigator.of(context).pushNamed('/signup');
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const SignUpPage()));
                       },
                       child: const Text(
                         'Sign up',

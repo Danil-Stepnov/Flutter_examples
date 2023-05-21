@@ -1,11 +1,13 @@
 part of 'login_cubit.dart';
 
-enum UserLoginStatus { initial, success, failure, error, signOut, emailVerify}
+enum UserLoginStatus { initial, signIn, signUp, failure, error, signOut, emailVerify}
 
 extension UserLoginStatusX on UserLoginStatus {
   bool get isInitial => this == UserLoginStatus.initial;
 
-  bool get isSuccess => this == UserLoginStatus.success;
+  bool get isSignIn => this == UserLoginStatus.signIn;
+
+  bool get isSignUp => this == UserLoginStatus.signUp;
 
   bool get isFailure => this == UserLoginStatus.failure;
 

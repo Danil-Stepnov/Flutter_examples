@@ -22,7 +22,6 @@ class VerifyEmailPage extends StatelessWidget {
   }
 }
 
-
 class _VerifyEmailPage extends StatefulWidget {
   const _VerifyEmailPage({Key? key}) : super(key: key);
 
@@ -68,7 +67,8 @@ class _VerifyEmailScreenState extends State<_VerifyEmailPage> {
 
   Future<void> sendVerificationEmail() async {
     try {
-      context.read<UserLoginCubit>().emailVerify();
+      final user = FirebaseAuth.instance.currentUser!;
+      context.read<UserLoginCubit>().emailVerify(user);
     } catch (e) {
       if (mounted) {
         SnackBarService.showSnackBar(
@@ -79,6 +79,7 @@ class _VerifyEmailScreenState extends State<_VerifyEmailPage> {
       }
     }
   }
+
 // спросить у кого нибудь, кажется тут очень сильно дерево виджетов засирается
   @override
   Widget build(BuildContext context) => isEmailVerified
@@ -112,9 +113,11 @@ class _VerifyEmailScreenState extends State<_VerifyEmailPage> {
                   ),
                   const SizedBox(height: 20),
                   TextButton(
-                    onPressed: () async {
+                    onPressed: () {
                       timer?.cancel();
-                      await FirebaseAuth.instance.currentUser!.delete();
+                      context.read<UserLoginCubit>().deleteUser();
+                      Navigator.push(context, MaterialPageRoute(
+                          builder: (context) => const HomePage()));
                     },
                     child: const Text(
                       'Отменить',

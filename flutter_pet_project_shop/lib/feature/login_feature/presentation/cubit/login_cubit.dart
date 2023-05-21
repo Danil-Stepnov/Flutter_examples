@@ -19,7 +19,7 @@ class UserLoginCubit extends Cubit<UserLoginState> {
       );
       final accessKey = await _userLoginRepository.getUserAccessKey();
       emit(state.copyWith(
-          status: UserLoginStatus.success, accessKey: accessKey));
+          status: UserLoginStatus.signIn, accessKey: accessKey));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found'|| e.code == 'wrong-password') {
         emit(state.copyWith(status: UserLoginStatus.error));
@@ -40,7 +40,7 @@ class UserLoginCubit extends Cubit<UserLoginState> {
         email: email,
         password: password,
       );
-      emit(state.copyWith(status: UserLoginStatus.success));
+      emit(state.copyWith(status: UserLoginStatus.signUp));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
         emit(state.copyWith(status: UserLoginStatus.error));
@@ -50,12 +50,17 @@ class UserLoginCubit extends Cubit<UserLoginState> {
     }
   }
 
-  Future<void> emailVerify() async {
-    final user = FirebaseAuth.instance.currentUser!;
+  Future<void> emailVerify(user) async {
+
     await user.sendEmailVerification();
     emit(state.copyWith(canResendEmail: false));
-    await Future.delayed(const Duration(seconds: 5));
+    await Future.delayed(const Duration(seconds: 60));
     emit(state.copyWith(canResendEmail: true));
 
 }
+  Future<void> deleteUser() async {
+    await FirebaseAuth.instance.currentUser!.delete();
+    await FirebaseAuth.instance.signOut();
+    emit(state.copyWith(status: UserLoginStatus.signOut));
+  }
 }
