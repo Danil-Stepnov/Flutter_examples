@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "1032765106469",
+    "project_id": "shop-pet-project",
+    "storage_bucket": "shop-pet-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1032765106469:android:f2ae4c873a034ff8a712cc",
+        "android_client_info": {
+          "package_name": "com.example.flutter_pet_project_shop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1032765106469-30kn5jbiruvnvsoe304u3ic9mmsa4e35.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4vX8iZvdyygQrA8j58rLOlaU7yMKNdEk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1032765106469-30kn5jbiruvnvsoe304u3ic9mmsa4e35.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1032765106469-8o9eef07795ngljm9b4n1udrj31vog8o.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterPetProjectShop"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'category_model.dart';
+import 'package:flutter_pet_project_shop/feature/data/models/categories_models/category_model.dart';
 import 'color_model.dart';
 import 'image_model.dart';
 

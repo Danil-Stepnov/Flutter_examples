@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_pet_project_shop/feature/domain/entities/item_intities/entities.dart';
+import 'package:flutter_pet_project_shop/feature/domain/entities/item_entities/entities.dart';
 
 class BasketItemsEnt extends Equatable {
   final int? id;
