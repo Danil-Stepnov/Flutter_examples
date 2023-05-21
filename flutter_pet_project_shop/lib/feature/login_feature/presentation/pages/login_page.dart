@@ -63,16 +63,8 @@ class _LoginPageState extends State<_LoginPage> {
         return BlocListener<UserLoginCubit, UserLoginState>(
           listener: (context, state) {
             if (state.status.isSignIn) {
-              Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(
-                  builder: (_) => HomePage(
-                    accessKey: context
-                        .read<UserLoginCubit>()
-                        .state
-                        .accessKey!
-                        .accessKey,
-                  ),
-                ),
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                '/',
                 (Route<dynamic> route) => false,
               );
             }
@@ -146,10 +138,7 @@ class _LoginPageState extends State<_LoginPage> {
                     const SizedBox(height: 30),
                     TextButton(
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const SignUpPage()));
+                        Navigator.pushNamed(context, '/login/signup');
                       },
                       child: const Text(
                         'Sign up',

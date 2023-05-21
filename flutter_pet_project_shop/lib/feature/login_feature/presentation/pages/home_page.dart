@@ -29,21 +29,19 @@ class HomePage extends StatelessWidget {
                 IconButton(
                   onPressed: () {
                     user == null
-                        ? Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const LoginPage()),
-                    )
-                        : Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const AccountPage()),
-                    );
+                        ? Navigator.pushNamed(
+                            context,
+                            '/login',
+                          )
+                        : Navigator.pushNamed(
+                            context,
+                            '/account',
+                          );
                   },
                   icon: Icon(
                     Icons.person,
-                    color: user == null ? Colors.white : Colors
-                        .lightGreenAccent,
+                    color:
+                        user == null ? Colors.white : Colors.lightGreenAccent,
                   ),
                 ),
               ],

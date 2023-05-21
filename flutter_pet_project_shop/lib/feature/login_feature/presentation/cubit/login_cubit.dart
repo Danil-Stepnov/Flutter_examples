@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,6 +11,33 @@ part 'login_state.dart';
 class UserLoginCubit extends Cubit<UserLoginState> {
   UserLoginCubit(this._userLoginRepository) : super(const UserLoginState());
 
+  UserLoginCubit.emailVerify(this._userLoginRepository)
+      : super(const UserLoginState()) {
+    bool isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
+    Timer? timer;
+
+    Future<void> checkEmailVerified() async {
+      if (FirebaseAuth.instance.currentUser == null) {
+        timer?.cancel();
+        return;
+      }
+      await FirebaseAuth.instance.currentUser?.reload();
+
+      isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
+
+      if (isEmailVerified) timer?.cancel();
+    }
+
+    if (!isEmailVerified) {
+      emailVerify();
+
+      timer = Timer.periodic(
+        const Duration(seconds: 3),
+        (_) => checkEmailVerified(),
+      );
+    }
+  }
+
   final UserLoginRepository _userLoginRepository;
 
   Future<void> fetchUserLogin(email, password) async {
@@ -18,10 +47,10 @@ class UserLoginCubit extends Cubit<UserLoginState> {
         password: password,
       );
       final accessKey = await _userLoginRepository.getUserAccessKey();
-      emit(state.copyWith(
-          status: UserLoginStatus.signIn, accessKey: accessKey));
+      emit(
+          state.copyWith(status: UserLoginStatus.signIn, accessKey: accessKey));
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found'|| e.code == 'wrong-password') {
+      if (e.code == 'user-not-found' || e.code == 'wrong-password') {
         emit(state.copyWith(status: UserLoginStatus.error));
       } else {
         emit(state.copyWith(status: UserLoginStatus.failure));
@@ -50,17 +79,18 @@ class UserLoginCubit extends Cubit<UserLoginState> {
     }
   }
 
-  Future<void> emailVerify(user) async {
-
+  Future<void> emailVerify() async {
+    final user = FirebaseAuth.instance.currentUser!;
     await user.sendEmailVerification();
     emit(state.copyWith(canResendEmail: false));
-    await Future.delayed(const Duration(seconds: 60));
+    await Future.delayed(const Duration(seconds: 5));
+    if (FirebaseAuth.instance.currentUser == null) return;
     emit(state.copyWith(canResendEmail: true));
+  }
 
-}
   Future<void> deleteUser() async {
-    await FirebaseAuth.instance.currentUser!.delete();
-    await FirebaseAuth.instance.signOut();
+    FirebaseAuth.instance.currentUser!.delete();
+    FirebaseAuth.instance.signOut();
     emit(state.copyWith(status: UserLoginStatus.signOut));
   }
 }

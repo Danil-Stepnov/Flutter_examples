@@ -31,8 +31,8 @@ class _AccountPageState extends State<_AccountPage> {
   Future<void> signOut() async {
     final navigator = Navigator.of(context);
     context.read<UserLoginCubit>().signOut();
-    navigator.pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => const HomePage()),
+    navigator.pushNamedAndRemoveUntil(
+        '/',
         (route) => false);
   }
 

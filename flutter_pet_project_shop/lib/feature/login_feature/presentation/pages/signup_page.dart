@@ -48,7 +48,6 @@ class _SignUpScreenState extends State<_SignUpPage> {
   }
 
   Future<void> signUp() async {
-    final navigator = Navigator.of(context);
     final isValid = formKey.currentState!.validate();
 
     if (!isValid) return;
@@ -75,8 +74,8 @@ class _SignUpScreenState extends State<_SignUpPage> {
         return BlocListener<UserLoginCubit, UserLoginState>(
           listener: (context, state) {
             if (state.status.isSignUp) {
-              Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => const VerifyEmailPage()));
+              Navigator.pushNamedAndRemoveUntil(
+                  context, '/verify_email', (route) => false);
             }
             if (state.status.isError) {
               SnackBarService.showSnackBar(
