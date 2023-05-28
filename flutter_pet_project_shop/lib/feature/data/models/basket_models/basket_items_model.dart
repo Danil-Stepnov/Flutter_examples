@@ -1,6 +1,7 @@
+import 'package:flutter_pet_project_shop/feature/catalog_feature/data/models/item_models/item_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../item_models/item_model.dart';
+
 
 part 'basket_items_model.freezed.dart';
 

@@ -1,0 +1,1 @@
+const paginationLimit = 5;

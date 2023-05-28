@@ -9,7 +9,7 @@ import 'package:flutter_pet_project_shop/feature/login_feature/presentation/serv
 
 import '../../domain/repository/user_login_repository.dart';
 import '../cubit/login_cubit.dart';
-import 'home_page.dart';
+import '../../../catalog_feature/presentation/page/home_page.dart';
 
 class VerifyEmailPage extends StatelessWidget {
   const VerifyEmailPage({Key? key}) : super(key: key);

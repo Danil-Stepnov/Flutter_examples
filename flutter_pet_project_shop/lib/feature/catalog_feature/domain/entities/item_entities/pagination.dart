@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-class Pagination extends Equatable { // А он точно нужен?
+class Pagination extends Equatable {
   const Pagination({
     required this.total,
     required this.page,

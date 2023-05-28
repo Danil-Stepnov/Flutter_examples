@@ -1,6 +1,7 @@
 import 'package:flutter_pet_project_shop/feature/data/mapper/mapper.dart';
-import 'package:flutter_pet_project_shop/feature/data/models/item_models/file_model.dart';
-import 'package:flutter_pet_project_shop/feature/domain/entities/item_entities/file_entity.dart';
+
+import '../../domain/entities/item_entities/file_entity.dart';
+import '../models/item_models/file_model.dart';
 
 class FileMapper extends Mapper<FileModel, File> {
   @override

@@ -1,14 +1,10 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_pet_project_shop/feature/login_feature/data/mapper/user_login_mapper.dart';
-import 'package:flutter_pet_project_shop/feature/login_feature/data/repository/user_login_repository.dart';
 import 'package:flutter_pet_project_shop/feature/login_feature/presentation/pages/account_page.dart';
 import 'package:flutter_pet_project_shop/feature/login_feature/presentation/pages/login_page.dart';
 import 'package:flutter_pet_project_shop/feature/login_feature/presentation/pages/verify_email_page.dart';
 
 import 'development.dart';
-import 'feature/login_feature/presentation/pages/home_page.dart';
+import 'feature/catalog_feature/presentation/page/home_page.dart';
 import 'feature/login_feature/presentation/pages/signup_page.dart';
 
 

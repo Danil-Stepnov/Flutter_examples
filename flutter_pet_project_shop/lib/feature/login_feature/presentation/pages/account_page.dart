@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_pet_project_shop/feature/login_feature/presentation/cubit/login_cubit.dart';
-import 'package:flutter_pet_project_shop/feature/login_feature/presentation/pages/home_page.dart';
+import 'package:flutter_pet_project_shop/feature/catalog_feature/presentation/page/home_page.dart';
 
 import '../../domain/repository/user_login_repository.dart';
 

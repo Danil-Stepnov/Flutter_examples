@@ -20,7 +20,8 @@ ListItemsModel _$ListItemsModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ListItemsModel {
-  List<ItemsModel> get items => throw _privateConstructorUsedError;
+  List<ItemsModel>? get items => throw _privateConstructorUsedError;
+  PaginationModel? get pagination => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +35,9 @@ abstract class $ListItemsModelCopyWith<$Res> {
           ListItemsModel value, $Res Function(ListItemsModel) then) =
       _$ListItemsModelCopyWithImpl<$Res, ListItemsModel>;
   @useResult
-  $Res call({List<ItemsModel> items});
+  $Res call({List<ItemsModel>? items, PaginationModel? pagination});
+
+  $PaginationModelCopyWith<$Res>? get pagination;
 }
 
 /// @nodoc
@@ -50,14 +53,31 @@ class _$ListItemsModelCopyWithImpl<$Res, $Val extends ListItemsModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? items = null,
+    Object? items = freezed,
+    Object? pagination = freezed,
   }) {
     return _then(_value.copyWith(
-      items: null == items
+      items: freezed == items
           ? _value.items
           : items // ignore: cast_nullable_to_non_nullable
-              as List<ItemsModel>,
+              as List<ItemsModel>?,
+      pagination: freezed == pagination
+          ? _value.pagination
+          : pagination // ignore: cast_nullable_to_non_nullable
+              as PaginationModel?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $PaginationModelCopyWith<$Res>? get pagination {
+    if (_value.pagination == null) {
+      return null;
+    }
+
+    return $PaginationModelCopyWith<$Res>(_value.pagination!, (value) {
+      return _then(_value.copyWith(pagination: value) as $Val);
+    });
   }
 }
 
@@ -69,7 +89,10 @@ abstract class _$$_ListItemsModelCopyWith<$Res>
       __$$_ListItemsModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<ItemsModel> items});
+  $Res call({List<ItemsModel>? items, PaginationModel? pagination});
+
+  @override
+  $PaginationModelCopyWith<$Res>? get pagination;
 }
 
 /// @nodoc
@@ -83,13 +106,18 @@ class __$$_ListItemsModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? items = null,
+    Object? items = freezed,
+    Object? pagination = freezed,
   }) {
     return _then(_$_ListItemsModel(
-      items: null == items
+      items: freezed == items
           ? _value._items
           : items // ignore: cast_nullable_to_non_nullable
-              as List<ItemsModel>,
+              as List<ItemsModel>?,
+      pagination: freezed == pagination
+          ? _value.pagination
+          : pagination // ignore: cast_nullable_to_non_nullable
+              as PaginationModel?,
     ));
   }
 }
@@ -97,23 +125,29 @@ class __$$_ListItemsModelCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_ListItemsModel implements _ListItemsModel {
-  const _$_ListItemsModel({required final List<ItemsModel> items})
+  const _$_ListItemsModel(
+      {required final List<ItemsModel>? items, required this.pagination})
       : _items = items;
 
   factory _$_ListItemsModel.fromJson(Map<String, dynamic> json) =>
       _$$_ListItemsModelFromJson(json);
 
-  final List<ItemsModel> _items;
+  final List<ItemsModel>? _items;
   @override
-  List<ItemsModel> get items {
+  List<ItemsModel>? get items {
+    final value = _items;
+    if (value == null) return null;
     if (_items is EqualUnmodifiableListView) return _items;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_items);
+    return EqualUnmodifiableListView(value);
   }
 
   @override
+  final PaginationModel? pagination;
+
+  @override
   String toString() {
-    return 'ListItemsModel(items: $items)';
+    return 'ListItemsModel(items: $items, pagination: $pagination)';
   }
 
   @override
@@ -121,13 +155,15 @@ class _$_ListItemsModel implements _ListItemsModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ListItemsModel &&
-            const DeepCollectionEquality().equals(other._items, _items));
+            const DeepCollectionEquality().equals(other._items, _items) &&
+            (identical(other.pagination, pagination) ||
+                other.pagination == pagination));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_items));
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_items), pagination);
 
   @JsonKey(ignore: true)
   @override
@@ -144,14 +180,17 @@ class _$_ListItemsModel implements _ListItemsModel {
 }
 
 abstract class _ListItemsModel implements ListItemsModel {
-  const factory _ListItemsModel({required final List<ItemsModel> items}) =
-      _$_ListItemsModel;
+  const factory _ListItemsModel(
+      {required final List<ItemsModel>? items,
+      required final PaginationModel? pagination}) = _$_ListItemsModel;
 
   factory _ListItemsModel.fromJson(Map<String, dynamic> json) =
       _$_ListItemsModel.fromJson;
 
   @override
-  List<ItemsModel> get items;
+  List<ItemsModel>? get items;
+  @override
+  PaginationModel? get pagination;
   @override
   @JsonKey(ignore: true)
   _$$_ListItemsModelCopyWith<_$_ListItemsModel> get copyWith =>

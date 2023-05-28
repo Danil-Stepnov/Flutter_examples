@@ -1,7 +1,8 @@
 import 'package:flutter_pet_project_shop/feature/data/mapper/mapper.dart';
-import 'package:flutter_pet_project_shop/feature/data/mapper/response_mappers/file_mapper.dart';
-import 'package:flutter_pet_project_shop/feature/data/models/item_models/image_model.dart';
-import 'package:flutter_pet_project_shop/feature/domain/entities/item_entities/entities.dart';
+import 'package:flutter_pet_project_shop/feature/catalog_feature/data/mapper/file_mapper.dart';
+
+import '../../domain/entities/item_entities/image_entity.dart';
+import '../models/item_models/image_model.dart';
 
 class ImageMapper extends Mapper<ImageModel, ImageEnt> {
   ImageMapper({required this.fileMapper});

@@ -7,7 +7,7 @@ import 'package:flutter_pet_project_shop/feature/login_feature/presentation/serv
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../domain/repository/user_login_repository.dart';
-import 'home_page.dart';
+import '../../../catalog_feature/presentation/page/home_page.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
