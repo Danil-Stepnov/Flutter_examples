@@ -1,14 +1,15 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_pet_project_shop/feature/login_feature/presentation/cubit/login_cubit.dart';
-import 'package:flutter_pet_project_shop/feature/login_feature/presentation/pages/signup_page.dart';
 import 'package:flutter_pet_project_shop/feature/login_feature/presentation/services/snack_bar_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_pet_project_shop/router/router.dart';
 
 import '../../domain/repository/user_login_repository.dart';
-import '../../../catalog_feature/presentation/page/home_page.dart';
 
+@RoutePage()
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -63,10 +64,8 @@ class _LoginPageState extends State<_LoginPage> {
         return BlocListener<UserLoginCubit, UserLoginState>(
           listener: (context, state) {
             if (state.status.isSignIn) {
-              Navigator.of(context).pushNamedAndRemoveUntil(
-                '/',
-                (Route<dynamic> route) => false,
-              );
+              AutoRouter.of(context).pushAndPopUntil(const HomeRoute(),
+                  predicate: (Route<dynamic> route) => false);
             }
             if (state.status.isError) {
               SnackBarService.showSnackBar(
@@ -138,18 +137,10 @@ class _LoginPageState extends State<_LoginPage> {
                     const SizedBox(height: 30),
                     TextButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, '/login/signup');
+                        AutoRouter.of(context).push(const SignUpRoute());
                       },
                       child: const Text(
                         'Sign up',
-                        style: TextStyle(decoration: TextDecoration.underline),
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () =>
-                          Navigator.of(context).pushNamed('/reset_password'),
-                      child: const Text(
-                        'Reset password',
                         style: TextStyle(decoration: TextDecoration.underline),
                       ),
                     ),

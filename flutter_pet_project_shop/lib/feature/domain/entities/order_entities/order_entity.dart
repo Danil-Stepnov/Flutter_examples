@@ -1,5 +1,5 @@
-import 'package:flutter_pet_project_shop/feature/domain/entities/basket_entities/get_basket_entity.dart';
-import 'package:flutter_pet_project_shop/feature/domain/entities/basket_entities/user_for_get_basket.dart';
+import 'package:flutter_pet_project_shop/feature/basket_feature/domain/entities/basket_entities/get_basket_entity.dart';
+import 'package:flutter_pet_project_shop/feature/basket_feature/domain/entities/basket_entities/user_for_get_basket.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_pet_project_shop/feature/domain/entities/order_entities/status_entity.dart';
 

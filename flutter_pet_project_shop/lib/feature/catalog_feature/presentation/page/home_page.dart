@@ -1,14 +1,17 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_pet_project_shop/feature/catalog_feature/data/repository/catalog_repository.dart';
 import 'package:flutter_pet_project_shop/feature/catalog_feature/presentation/cubit/catalog_cubit.dart';
+import 'package:flutter_pet_project_shop/router/router.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import '../../domain/entities/item_entities/item_entity.dart';
 import '../widgets/product_card.dart';
 
+@RoutePage()
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -66,14 +69,16 @@ class _HomePageState extends State<_HomePage> {
               IconButton(
                 onPressed: () {
                   user == null
-                      ? Navigator.pushNamed(
-                          context,
-                          '/login',
-                        )
-                      : Navigator.pushNamed(
-                          context,
-                          '/account',
-                        );
+                      ? AutoRouter.of(context).push(const LoginRoute())
+                      : AutoRouter.of(context).push(const BasketRoute());
+                },
+                icon: const Icon(Icons.shopping_cart_outlined),
+              ),
+              IconButton(
+                onPressed: () {
+                  user == null
+                      ? AutoRouter.of(context).push(const LoginRoute())
+                      : AutoRouter.of(context).push(const AccountRoute());
                 },
                 icon: Icon(
                   Icons.person,
@@ -123,12 +128,17 @@ class _HomePageState extends State<_HomePage> {
         ),
         itemBuilder: (context, items, index) => SizedBox(
             height: 410,
-            child: ItemCardForGridView(
-              id: items.id,
-              title: items.title,
-              price: items.price,
-              colors: items.colors,
-              url: items.image?.file?.url,
+            child: GestureDetector(
+              onTap: () {
+                AutoRouter.of(context).push(ItemCardRoute(itemId: items.id));
+              },
+              child: ItemCardForGridView(
+                id: items.id,
+                title: items.title,
+                price: items.price,
+                colors: items.colors,
+                url: items.image?.file?.url,
+              ),
             )),
       ),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

@@ -1,23 +1,24 @@
 import 'dart:async';
 
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_pet_project_shop/feature/login_feature/presentation/pages/account_page.dart';
 
 import 'package:flutter_pet_project_shop/feature/login_feature/presentation/services/snack_bar_service.dart';
+import 'package:flutter_pet_project_shop/router/router.dart';
 
 import '../../domain/repository/user_login_repository.dart';
 import '../cubit/login_cubit.dart';
-import '../../../catalog_feature/presentation/page/home_page.dart';
 
+@RoutePage()
 class VerifyEmailPage extends StatelessWidget {
   const VerifyEmailPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => UserLoginCubit.emailVerify(context.read<UserLoginRepository>()),
+      create: (_) =>
+          UserLoginCubit.emailVerify(context.read<UserLoginRepository>()),
       child: const _VerifyEmailPage(),
     );
   }
@@ -31,7 +32,6 @@ class _VerifyEmailPage extends StatefulWidget {
 }
 
 class _VerifyEmailScreenState extends State<_VerifyEmailPage> {
-
   Future<void> sendVerificationEmail() async {
     try {
       context.read<UserLoginCubit>().emailVerify();
@@ -69,7 +69,7 @@ class _VerifyEmailScreenState extends State<_VerifyEmailPage> {
                 builder: (context, state) {
                   return ElevatedButton.icon(
                     onPressed:
-                        state.canResendEmail? sendVerificationEmail : null,
+                        state.canResendEmail ? sendVerificationEmail : null,
                     icon: const Icon(Icons.email),
                     label: const Text('Resend'),
                   );
@@ -79,7 +79,8 @@ class _VerifyEmailScreenState extends State<_VerifyEmailPage> {
               TextButton(
                 onPressed: () {
                   context.read<UserLoginCubit>().deleteUser();
-                  Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+                  AutoRouter.of(context).pushAndPopUntil(const HomeRoute(),
+                      predicate: (Route<dynamic> route) => false);
                 },
                 child: const Text(
                   'Отменить',

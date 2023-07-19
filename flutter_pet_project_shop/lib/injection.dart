@@ -1,6 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_pet_project_shop/feature/basket_feature/data/mapper/basket_item_mapper.dart';
+import 'package:flutter_pet_project_shop/feature/basket_feature/data/mapper/basket_mapper.dart';
+import 'package:flutter_pet_project_shop/feature/basket_feature/data/mapper/basket_user_mapper.dart';
+import 'package:flutter_pet_project_shop/feature/basket_feature/data/repository/basket_repository.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_pet_project_shop/feature/basket_feature/data/data_sources/store.dart';
 import 'package:flutter_pet_project_shop/feature/catalog_feature/data/mapper/color_mapper.dart';
 import 'package:flutter_pet_project_shop/feature/catalog_feature/data/mapper/file_mapper.dart';
 import 'package:flutter_pet_project_shop/feature/catalog_feature/data/mapper/image_mapper.dart';
@@ -17,6 +23,8 @@ import 'firebase_options.dart';
 
 Future<Widget> injection(Widget app) async {
 
+  final store = Store(await SharedPreferences.getInstance());
+
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   final userLoginMapper = UserLoginMapper();
@@ -26,15 +34,21 @@ Future<Widget> injection(Widget app) async {
   final colorsMapper = ColorsMapper();
   final categoryMapper = CategoryMapper();
   final itemMapper = ItemMapper(imageMapper: imageMapper, colorsMapper: colorsMapper, categoryMapper: categoryMapper);
-  final lastItemMapper = ListItemMapper(itemMapper: itemMapper, pagination: paginationMapper);
+  final listItemMapper = ListItemMapper(itemMapper: itemMapper, pagination: paginationMapper);
+  final itemCardMapper = ItemMapper(imageMapper: imageMapper, colorsMapper: colorsMapper, categoryMapper: categoryMapper);
+  final basketItemMapper = BasketItemMapper(itemMapper: itemMapper);
+  final basketUserMapper = BasketUserMapper();
+  final basketMapper = BasketMapper(basketItemMapper: basketItemMapper, basketUserMapper: basketUserMapper);
 
-  final userLoginRepository = UserLoginRepositoryImpl(userLoginMapper);
-  final catalogRepository = CatalogRepository(lastItemMapper);
+  final userLoginRepository = UserLoginRepositoryImpl(userLoginMapper, store);
+  final catalogRepository = CatalogRepository(listItemMapper, itemCardMapper);
+  final basketRepository = BasketRepositoryImpl(basketMapper, store);
 
   return MultiBlocProvider(
     providers: [
       RepositoryProvider<UserLoginRepository>(create: (_) => userLoginRepository),
       RepositoryProvider<CatalogRepository>(create: (_) => catalogRepository),
+      RepositoryProvider<BasketRepositoryImpl>(create: (_) => basketRepository),
     ],
     child: app,
   );

@@ -1,11 +1,13 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_pet_project_shop/feature/login_feature/presentation/cubit/login_cubit.dart';
-import 'package:flutter_pet_project_shop/feature/catalog_feature/presentation/page/home_page.dart';
+import 'package:flutter_pet_project_shop/router/router.dart';
 
 import '../../domain/repository/user_login_repository.dart';
 
+@RoutePage()
 class AccountPage extends StatelessWidget {
   const AccountPage({Key? key}) : super(key: key);
 
@@ -29,11 +31,9 @@ class _AccountPageState extends State<_AccountPage> {
   final user = FirebaseAuth.instance.currentUser;
 
   Future<void> signOut() async {
-    final navigator = Navigator.of(context);
     context.read<UserLoginCubit>().signOut();
-    navigator.pushNamedAndRemoveUntil(
-        '/',
-        (route) => false);
+    AutoRouter.of(context).pushAndPopUntil(const HomeRoute(),
+        predicate: (Route<dynamic> route) => false);
   }
 
   @override
@@ -43,7 +43,7 @@ class _AccountPageState extends State<_AccountPage> {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+            AutoRouter.of(context).pop();
           },
           icon: const Icon(Icons.arrow_back_ios),
         ),

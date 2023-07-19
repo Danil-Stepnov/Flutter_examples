@@ -1,5 +1,5 @@
-import 'package:flutter_pet_project_shop/feature/data/models/basket_models/basket_model.dart';
-import 'package:flutter_pet_project_shop/feature/data/models/basket_models/basket_user_model.dart';
+import 'package:flutter_pet_project_shop/feature/basket_feature/data/models/basket_model.dart';
+import 'package:flutter_pet_project_shop/feature/basket_feature/data/models/basket_user_model.dart';
 import 'package:flutter_pet_project_shop/feature/data/models/order_model/status_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 

@@ -1,13 +1,14 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_pet_project_shop/feature/login_feature/presentation/cubit/login_cubit.dart';
-import 'package:flutter_pet_project_shop/feature/login_feature/presentation/pages/verify_email_page.dart';
 import 'package:flutter_pet_project_shop/feature/login_feature/presentation/services/snack_bar_service.dart';
+import 'package:flutter_pet_project_shop/router/router.dart';
 
 import '../../domain/repository/user_login_repository.dart';
 
+@RoutePage()
 class SignUpPage extends StatelessWidget {
   const SignUpPage({Key? key}) : super(key: key);
 
@@ -34,6 +35,7 @@ class _SignUpScreenState extends State<_SignUpPage> {
   TextEditingController passwordTextRepeatController = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
+  @override
   void dispose() {
     emailTextInputController.dispose();
     passwordTextInputController.dispose();
@@ -74,8 +76,7 @@ class _SignUpScreenState extends State<_SignUpPage> {
         return BlocListener<UserLoginCubit, UserLoginState>(
           listener: (context, state) {
             if (state.status.isSignUp) {
-              Navigator.pushNamedAndRemoveUntil(
-                  context, '/verify_email', (route) => false);
+              AutoRouter.of(context).push(const VerifyEmailRoute());
             }
             if (state.status.isError) {
               SnackBarService.showSnackBar(
@@ -167,9 +168,9 @@ class _SignUpScreenState extends State<_SignUpPage> {
                     ),
                     const SizedBox(height: 30),
                     TextButton(
-                      onPressed: () => Navigator.of(context).pop(),
+                      onPressed: () => AutoRouter.of(context).pop(),
                       child: const Text(
-                        'Canсel',
+                        'Cancel',
                         style: TextStyle(decoration: TextDecoration.underline),
                       ),
                     ),
